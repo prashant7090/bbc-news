@@ -1,0 +1,10 @@
+Place file in import directory of Neo4j database. Then run the following Cypher query to load the data:
+
+//Check if CSV is accessible
+
+LOAD CSV WITH HEADERS
+FROM 'file:///bbc-news-data.csv'
+AS row
+FIELDTERMINATOR '\t'
+RETURN row
+LIMIT 5;

@@ -1,0 +1,22 @@
+Create constraints before importing data:
+
+CREATE CONSTRAINT article_category_filename_unique IF NOT EXISTS
+FOR (a:Article)
+REQUIRE (a.category, a.filename) IS UNIQUE;
+
+CREATE CONSTRAINT category_name_unique IF NOT EXISTS
+FOR (c:Category)
+REQUIRE c.name IS UNIQUE;
+
+
+//Index 
+
+CREATE VECTOR INDEX article_embeddings IF NOT EXISTS
+FOR (a:Article)
+ON (a.embedding)
+OPTIONS {
+    indexConfig: {
+        `vector.dimensions`: 384,
+        `vector.similarity_function`: 'cosine'
+    }
+};

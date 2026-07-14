@@ -1,0 +1,16 @@
+LOAD CSV WITH HEADERS
+FROM 'file:///bbc-news-data.csv'
+AS row
+FIELDTERMINATOR '\t'
+
+MERGE (c:Category {name: row.category})
+
+MERGE (a:Article {
+    category: row.category,
+    filename: row.filename
+})
+
+SET a.title = row.title,
+    a.content = row.content
+
+MERGE (a)-[:BELONGS_TO]->(c);
